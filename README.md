@@ -15,6 +15,9 @@ This project demonstrates a full **DevOps pipeline** for deploying a Node.js app
 - **GitHub Actions** — CI/CD automation
 
 ---
+## 📊 Architecture Diagram
+
+![Full DevOps AWS Pipeline](./full_devops_aws_pipeline.png)
 
 ## 🎯 Features
 
