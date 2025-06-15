@@ -1,10 +1,7 @@
 node_modules
+*.log
 .env
-npm-debug.log
 .terraform/
 *.tfstate
 *.tfstate.backup
-*.log
-*.zip
-*.pem
-*.tfvars
+terraform.tfvars
