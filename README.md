@@ -1,4 +1,5 @@
-# 🚀 Full DevOps Node.js Deployment on AWS (Docker + Terraform + ECR + ECS + GitHub Actions)
+#  Full DevOps Node.js Deployment on AWS 
+(Docker + Terraform + ECR + ECS + GitHub Actions)
 
 This project demonstrates a full **DevOps pipeline** for deploying a Node.js application to AWS using modern tools and cloud services. It features **Docker**, **Terraform**, **ECR**, **ECS Fargate**, and **GitHub Actions** for CI/CD — closely aligned with real-world DevOps practices.
 
