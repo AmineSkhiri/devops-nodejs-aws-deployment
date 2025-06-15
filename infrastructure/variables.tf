@@ -16,7 +16,8 @@ variable "aws_secret_key" {
 variable "ecr_image_url" {
   description = "ECR image to deploy"
 }
-
 variable "ecr_repo_name" {
-  default = "devops-nodejs-app"
+  description = "Name of the ECR repository"
+  type        = string
+  default     = "devops-nodejs-app"
 }
