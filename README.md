@@ -22,6 +22,9 @@ This app returns a `200 OK` response on `/`.
 4. ALB exposes the app on the internet
 5. CloudWatch to expose the logs 
 
+## Test Link 
+http://nodejs-app-lb-7780150.us-east-1.elb.amazonaws.com/
+
 ## 📊 Architecture Diagram
 
 ![Full DevOps AWS Pipeline](./full_devops_aws_pipeline.png)
