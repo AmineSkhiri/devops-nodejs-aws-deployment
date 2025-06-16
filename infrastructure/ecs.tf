@@ -10,15 +10,24 @@ resource "aws_ecs_task_definition" "node_task" {
   memory                   = "512"
   execution_role_arn       = aws_iam_role.ecs_task_execution.arn
 
-  container_definitions = jsonencode([{
-    name      = "node-container",
-    image     = var.ecr_image_url,
-    essential = true,
-    portMappings = [{
-      containerPort = 3000,
-      hostPort      = 3000
-    }]
-  }])
+container_definitions = jsonencode([{
+  name      = "node-container",
+  image     = var.ecr_image_url,
+  essential = true,
+  portMappings = [{
+    containerPort = 3000,
+    hostPort      = 3000
+  }],
+  logConfiguration = {
+    logDriver = "awslogs",
+    options = {
+      awslogs-group         = "/ecs/node-service"
+      awslogs-region        = var.aws_region
+      awslogs-stream-prefix = "ecs"
+    }
+  }
+}])
+
 }
 
 resource "aws_ecs_service" "node_service" {
