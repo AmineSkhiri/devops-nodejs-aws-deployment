@@ -45,11 +45,12 @@ jobs:
       - name: ⚙️ Update kubeconfig
         run: aws eks update-kubeconfig --region us-east-1 --name nodejs-eks-cluster
 
-      - name: ☸️ Deploy to EKS
-        env:
-          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      - name: 🛠️ Replace image tag in deployment file
         run: |
-          # Replace image tag in deployment before applying
+          sed "s|\${IMAGE_TAG}|${{ env.IMAGE_TAG }}|g" infrastructure/k8s/deployment.yaml.template > infrastructure/k8s/deployment.yaml
+
+      - name: ☸️ Deploy to EKS
+        run: |
           kubectl apply -f infrastructure/k8s/deployment.yaml
           kubectl apply -f infrastructure/k8s/service.yaml
           kubectl rollout status deployment/nodejs-app
