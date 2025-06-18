@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-app
-  labels:
-    app: nodejs-app
 spec:
   replicas: 1
   selector:
@@ -16,7 +14,6 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-          image: 890742601773.dkr.ecr.us-east-1.amazonaws.com/devops-nodejs-app:latest
-          imagePullPolicy: Always
+          image: 890742601773.dkr.ecr.us-east-1.amazonaws.com/devops-nodejs-app:${IMAGE_TAG}
           ports:
             - containerPort: 3000

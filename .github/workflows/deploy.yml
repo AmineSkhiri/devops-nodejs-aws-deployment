@@ -24,13 +24,15 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: 🐳 Build and Push Docker image to ECR
+        id: ecr
         env:
           ECR_REGISTRY: 890742601773.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPOSITORY: devops-nodejs-app
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: 🚀 Deploy to ECS (Fargate)
         run: |
@@ -44,14 +46,18 @@ jobs:
         run: aws eks update-kubeconfig --region us-east-1 --name nodejs-eks-cluster
 
       - name: ☸️ Deploy to EKS
+        env:
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
         run: |
+          # Replace image tag in deployment before applying
+          envsubst < infrastructure/k8s/deployment.yaml.template > infrastructure/k8s/deployment.yaml
           kubectl apply -f infrastructure/k8s/deployment.yaml
           kubectl apply -f infrastructure/k8s/service.yaml
+          kubectl rollout status deployment/nodejs-app
 
       - name: 🌐 Output Load Balancer URLs
         run: |
-          echo "ECS Load Balancer:"
+          echo "🔗 ECS Load Balancer:"
           echo "http://nodejs-app-lb-7780150.us-east-1.elb.amazonaws.com"
-
-          echo "EKS Load Balancer:"
+          echo "🔗 EKS Load Balancer:"
           kubectl get svc nodejs-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
