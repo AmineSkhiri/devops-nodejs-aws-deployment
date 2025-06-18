@@ -1,4 +1,4 @@
-name: Deploy to AWS ECS
+name: Deploy to AWS ECS & EKS
 
 on:
   push:
@@ -32,10 +32,26 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: 🚀 Deploy to ECS
+      - name: 🚀 Deploy to ECS (Fargate)
         run: |
           aws ecs update-service \
             --cluster nodejs-cluster \
             --service node-service \
             --force-new-deployment \
             --region us-east-1
+
+      - name: ⚙️ Update kubeconfig
+        run: aws eks update-kubeconfig --region us-east-1 --name nodejs-eks-cluster
+
+      - name: ☸️ Deploy to EKS
+        run: |
+          kubectl apply -f infrastructure/k8s/deployment.yaml
+          kubectl apply -f infrastructure/k8s/service.yaml
+
+      - name: 🌐 Output Load Balancer URLs
+        run: |
+          echo "ECS Load Balancer:"
+          echo "http://nodejs-app-lb-7780150.us-east-1.elb.amazonaws.com"
+
+          echo "EKS Load Balancer:"
+          kubectl get svc nodejs-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
