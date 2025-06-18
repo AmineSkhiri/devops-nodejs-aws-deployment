@@ -40,12 +40,15 @@ jobs:
           ECR_REGISTRY: 890742601773.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPOSITORY: devops-nodejs-app
         run: |
-          # Download existing task definition
+          # Download current task definition
           aws ecs describe-task-definition --task-definition node-task \
             --query "taskDefinition" > task-definition.json
 
-          # Update image tag
-          jq '.containerDefinitions[0].image = "'$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG'"' task-definition.json > new-task-def.json
+          # Remove read-only and irrelevant fields
+          jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' task-definition.json > clean-task-def.json
+
+          # Replace image
+          jq '.containerDefinitions[0].image = "'$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG'"' clean-task-def.json > new-task-def.json
 
           # Register new revision
           aws ecs register-task-definition --cli-input-json file://new-task-def.json
@@ -54,7 +57,7 @@ jobs:
           REVISION=$(aws ecs describe-task-definition --task-definition node-task \
             --query "taskDefinition.revision" --output text)
 
-          # Update ECS service to use new task definition
+          # Update ECS service
           aws ecs update-service \
             --cluster nodejs-cluster \
             --service node-service \
