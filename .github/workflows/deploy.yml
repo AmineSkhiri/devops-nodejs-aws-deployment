@@ -50,7 +50,6 @@ jobs:
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
         run: |
           # Replace image tag in deployment before applying
-          envsubst < infrastructure/k8s/deployment.yaml.template > infrastructure/k8s/deployment.yaml
           kubectl apply -f infrastructure/k8s/deployment.yaml
           kubectl apply -f infrastructure/k8s/service.yaml
           kubectl rollout status deployment/nodejs-app
