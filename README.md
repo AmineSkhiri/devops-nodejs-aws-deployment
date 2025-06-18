@@ -72,3 +72,23 @@ This project includes **real-world AWS infrastructure**, provisioned securely us
 
 You now have the flexibility to demonstrate expertise in both ECS and EKS setups, following DevOps best practices in AWS.
 
+ ### Quick Recap — What We Have Now
+
+✅ Dockerized a Node.js app
+
+✅ Built a full CI/CD pipeline using GitHub Actions
+
+✅ Pushed Docker images to AWS ECR
+
+✅ Deployed app to both:
+
+ECS (Fargate) with an ALB
+
+EKS (Kubernetes) with LoadBalancer
+
+✅ Used Terraform to provision VPC, subnets, EKS cluster, and more
+
+✅ Integrated image versioning ($GITHUB_SHA)
+
+✅ Verified real-time rolling deployments across both environments
+
