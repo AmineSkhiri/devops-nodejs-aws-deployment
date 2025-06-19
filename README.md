@@ -3,7 +3,7 @@
 This project demonstrates a complete CI/CD pipeline to deploy a Node.js app using:
 
 - Docker  
-- AWS ECS (Fargate) and AWS EKS (Kubernetes) ✅  
+- AWS ECS (Fargate) and AWS EKS (Kubernetes) 
 - ECR (Elastic Container Registry)  
 - Application Load Balancer (ALB)  
 - Terraform for Infrastructure as Code (IaC)  
@@ -12,13 +12,13 @@ This project demonstrates a complete CI/CD pipeline to deploy a Node.js app usin
 
 ---
 
-## 🩺 Health Check
+##  Health Check
 
 This app returns a `200 OK` response on the `/` endpoint.
 
 ---
 
-## 🚀 Deployment Flow
+##  Deployment Flow
 
 1. Push code to GitHub  
 2. GitHub Actions:
@@ -30,28 +30,6 @@ This app returns a `200 OK` response on the `/` endpoint.
 5. CloudWatch and `kubectl logs` provide observability  
 
 ---
-
-## 🌐 Live Test Links
-
-- **ECS Load Balancer**:  
-  http://nodejs-app-lb-7780150.us-east-1.elb.amazonaws.com/
-
-- **EKS Load Balancer**:  
-  a333097f593374071b846c44c47c1406-552438459.us-east-1.elb.amazonaws.com
-
----
-
-## 📊 Architecture Diagram
-
-![ DevOps AWS Pipeline](./full_devops_aws_pipeline.png)
-![Outputs](./Output_EKS_ECS.png)
-
-
----
-
-## 🛡️ Infrastructure & Security (Terraform)
-
-This project uses **Terraform** to provision a full production-like AWS setup:
 
 ### 🔹 Networking & VPC
 
@@ -86,7 +64,7 @@ This project uses **Terraform** to provision a full production-like AWS setup:
 
 ---
 
-## 🔁 CI/CD Highlights (GitHub Actions)
+##  CI/CD Highlights (GitHub Actions)
 
 - Runs on every push to `main`
 - Uses `${GITHUB_SHA}` to uniquely tag each image
@@ -106,5 +84,24 @@ This project uses **Terraform** to provision a full production-like AWS setup:
 ✔️ Automated image deployments to both platforms  
 ✔️ Used GitHub Actions to orchestrate builds, pushes, and rollouts  
 ✔️ Live demo links for both ECS and EKS  
+
+##  Live Test Links
+
+- **ECS Load Balancer**:  
+  http://nodejs-app-lb-7780150.us-east-1.elb.amazonaws.com/
+
+- **EKS Load Balancer**:  
+  a333097f593374071b846c44c47c1406-552438459.us-east-1.elb.amazonaws.com
+
+---
+
+##  Architecture Diagram
+
+![ DevOps AWS Pipeline](./full_devops_aws_pipeline.png)
+![Outputs](./Output_EKS_ECS.png)
+
+
+---
+
 
 
